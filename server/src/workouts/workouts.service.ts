@@ -6,6 +6,7 @@ import { Repository, SelectQueryBuilder } from 'typeorm';
 import { CreateWorkoutDto } from './dtos/create-workout.dto';
 import { SearchWorkoutDto } from './dtos/search-workout.dto';
 import { Workout } from './entities/workout.entity';
+import { Sort } from './enums/sort.enum';
 
 @Injectable()
 export class WorkoutsService {
@@ -34,6 +35,8 @@ export class WorkoutsService {
     this.filterByCategory(queryBuilder, categories);
 
     return queryBuilder
+      .andWhere('startDate > :now', { now: new Date().toISOString() })
+      .orderBy('startDate', Sort.Asc)
       .skip(skipCount)
       .take(this.PAGE_SIZE)
       .getManyAndCount();
@@ -43,8 +46,7 @@ export class WorkoutsService {
     if (month) {
       const startOfMonth = moment().startOf('month').add(month, 'month').toISOString();
       const endOfMonth = moment().endOf('month').add(month, 'month').toISOString();
-      queryBuilder.andWhere('startDate > :now AND startDate >= :startOfMonth AND startDate <= :endOfMonth', {
-        now: new Date().toISOString(),
+      queryBuilder.andWhere('startDate >= :startOfMonth AND startDate <= :endOfMonth', {
         startOfMonth,
         endOfMonth
       });
