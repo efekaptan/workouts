@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, CardActions, CardMedia, CardContent, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardActions, CardMedia, CardContent, Chip, Grid, Typography } from '@material-ui/core';
 import { Link, useParams } from 'react-router-dom';
 import useStyles from './style';
 import Workout from '../workout';
@@ -31,7 +31,10 @@ export default function Detail() {
             <CardContent>
                 <Typography className={classes.name}>{workout.name}</Typography>
                 <Typography className={classes.description}>{workout.description}</Typography>
-                <Typography className={classes.startDate}>{format(workout.startDate)}</Typography>
+                <Grid container alignItems="flex-start" direction="row">
+                    <Typography className={classes.startDate}>{format(workout.startDate)}</Typography>
+                    <Chip className={classes.category} label={workout.category} size="small" />
+                </Grid>
             </CardContent>
             <CardActions>
                 <Grid container alignItems="flex-start" justify="flex-end" direction="row">

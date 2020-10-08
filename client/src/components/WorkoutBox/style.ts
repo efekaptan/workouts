@@ -13,6 +13,9 @@ export default makeStyles((theme: Theme) =>
         description: {
             fontSize: 12,
             fontWeight: 'bold'
+        },
+        cardContent : {
+            minHeight: 124
         }
     }),
 );

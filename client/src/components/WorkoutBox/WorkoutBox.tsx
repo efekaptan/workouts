@@ -21,7 +21,7 @@ export default function WorkoutBox({ image, name, description }: Props) {
                 image={image}
                 title={name}
                 className={classes.media} />
-            <CardContent>
+            <CardContent className={classes.cardContent}>
                 <Typography className={classes.name}>{name}</Typography>
                 <Typography className={classes.description}>{truncate(description)}</Typography>
             </CardContent>

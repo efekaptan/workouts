@@ -20,7 +20,11 @@ export default makeStyles((theme: Theme) =>
             alignContent: 'right'
         },
         link: {
-            textDecoration: 'none'
+            textDecoration: 'none',
+            marginBottom: theme.spacing(1)
+        },
+        category: {
+            margin: '5px 0 0 10px'
         }
     }),
 );
