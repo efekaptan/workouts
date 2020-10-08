@@ -1,23 +1,18 @@
 import Axios, { AxiosResponse } from 'axios';
 import { apiUrl } from '../../config';
+import { Search } from '../../context';
 import Workout from './workout';
-
-export interface WorkoutsSearch {
-    month?: number;
-    categories?: string[];
-    pageIndex: number
-}
 
 interface FindAllResponse {
     workouts: Workout[];
     recordCount: number;
 }
 
-export const findAll = async (workoutsSearch: WorkoutsSearch): Promise<FindAllResponse> => {
+export const findAll = async (search: Search): Promise<FindAllResponse> => {
     const result: AxiosResponse<[[], number]> = await Axios.get(`${apiUrl}/workouts`, {
         params: {
-            ...workoutsSearch,
-            categories: workoutsSearch.categories?.join(',')
+            ...search,
+            categories: search.categories?.join(',')
         }
     });
 

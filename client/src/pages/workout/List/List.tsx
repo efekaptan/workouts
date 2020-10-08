@@ -1,50 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import WorkoutBox from '../../../components/WorkoutBox';
 import Select from '../../../components/Select';
 import MultiSelect from '../../../components/MultiSelect';
-import Workout from '../workout';
 import useStyles from './style';
-import { findAll, WorkoutsSearch } from '../api';
+import { findAll } from '../api';
 import { categories, pageSize } from '../../../config';
 import { Pagination } from '@material-ui/lab';
 import { getMonths } from '../../../utils/date';
+import { Context, State } from '../../../context';
 
 export default function List() {
     const classes = useStyles();
-    const [workouts, setWorkouts] = useState([] as Workout[]);
+
     const [recordCount, setRecordCount] = useState(0);
     const pageCount = Math.ceil(recordCount / pageSize);
-    const [workoutsSearch, setWorkoutsSearch] = useState<WorkoutsSearch>({ pageIndex: 1 });
+
+    const { workouts, setWorkouts, search, setSearch } = useContext<State>(Context);
 
     useEffect(() => {
         (async () => {
-            const { workouts, recordCount } = await findAll(workoutsSearch);
+            const { workouts, recordCount } = await findAll(search);
             setWorkouts(workouts);
             setRecordCount(recordCount)
         })();
-    }, [workoutsSearch]);
+    }, [search, setWorkouts]);
 
     function onMonthSelect(month: number) {
-        setWorkoutsSearch({
-            ...workoutsSearch,
+        setSearch({
+            ...search,
             pageIndex: 1,
             month
         });
     }
 
     function onCategoriesSelect(categories: string[]) {
-        setWorkoutsSearch({
-            ...workoutsSearch,
+        setSearch({
+            ...search,
             pageIndex: 1,
             categories
         });
     }
 
     function onPageSelect(pageIndex: number) {
-        setWorkoutsSearch({
-            ...workoutsSearch,
+        setSearch({
+            ...search,
             pageIndex
         });
     }
@@ -55,14 +56,14 @@ export default function List() {
                 <Select
                     label="Month"
                     options={getMonths()}
-                    value={workoutsSearch.month}
+                    value={search.month}
                     onChange={onMonthSelect}
                 />
                 <Box ml={2} display="inline">
                     <MultiSelect
                         label="Categories"
                         options={categories}
-                        value={workoutsSearch.categories}
+                        value={search.categories}
                         onChange={onCategoriesSelect} />
                 </Box>
             </Box>
@@ -82,7 +83,7 @@ export default function List() {
             {pageCount > 1 &&
                 <Grid className={classes.pagination} container direction="row" justify="center" alignItems="center">
                     <Pagination
-                        page={workoutsSearch.pageIndex}
+                        page={search.pageIndex}
                         count={pageCount}
                         color="primary"
                         onChange={((event, page) => onPageSelect(page))} />
