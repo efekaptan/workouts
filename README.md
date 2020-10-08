@@ -37,5 +37,4 @@ npm start
 ### ToDo
  - Display loading placeholder (ex: https://material-ui.com/components/skeleton/)
  - Implement category filter integration tests.
- - Keep the state between list and detail pages.
  - Display proper error messages in case of a server error (ex: http 500)
