@@ -54,6 +54,7 @@ export default function List() {
         <>
             <Box mb={4}>
                 <Select
+                    dataTestId="month-select"
                     label="Month"
                     options={getMonths()}
                     value={search.month}
@@ -83,6 +84,7 @@ export default function List() {
             {pageCount > 1 &&
                 <Grid className={classes.pagination} container direction="row" justify="center" alignItems="center">
                     <Pagination
+                        data-testid="pagination"
                         page={search.pageIndex}
                         count={pageCount}
                         color="primary"

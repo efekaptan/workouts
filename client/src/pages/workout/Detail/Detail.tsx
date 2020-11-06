@@ -23,14 +23,18 @@ export default function Detail() {
     }
 
     return (
-        <Card>
+        <Card id="workout-detail">
             <CardMedia
                 image={workout.image}
                 title={workout.name}
                 className={classes.media} />
             <CardContent>
-                <Typography className={classes.name}>{workout.name}</Typography>
-                <Typography className={classes.description}>{workout.description}</Typography>
+                <Typography className={classes.name} data-testid="name">
+                    {workout.name}
+                </Typography>
+                <Typography className={classes.description} data-testid="description">
+                    {workout.description}
+                </Typography>
                 <Grid container alignItems="flex-start" direction="row">
                     <Typography className={classes.startDate}>{format(workout.startDate)}</Typography>
                     <Chip className={classes.category} label={workout.category} size="small" />

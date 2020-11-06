@@ -1,18 +1,21 @@
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 
 export const format = (date: Date) => {
     return moment(date).format('LLL');
 }
 
 export const getMonths = () => {
-    const monthList = [];
-    const current = moment(new Date());
-    for (let i = 0; i < 12; i++) {
-        monthList.push({
-            key: i,
-            value: `${current.format('MMMM')} - ${current.year()}`
-        });
+    const current = moment();
+    return Array.from(Array(12).keys()).map((month) => {
+        const item = {
+            key: month,
+            value: formatMonth(current)
+        };
         current.add(1, 'month');
-    }
-    return monthList;
+        return item;
+    });
+}
+
+export const formatMonth = (date: Moment) => {
+    return `${date.format('MMMM')} - ${date.year()}`
 }

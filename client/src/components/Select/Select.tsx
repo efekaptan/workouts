@@ -12,9 +12,10 @@ interface Props {
     options: Option[];
     value?: number;
     onChange: (value: number) => void;
+    dataTestId: string;
 }
 
-export default function Select({ label, options, value, onChange }: Props) {
+export default function Select({ label, options, value, onChange, dataTestId }: Props) {
     const classes = useStyles();
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -22,7 +23,7 @@ export default function Select({ label, options, value, onChange }: Props) {
     };
 
     return (
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} data-testid={dataTestId}>
             <InputLabel>{label}</InputLabel>
             <MaterialSelect
                 value={value === undefined ? "" : value}
